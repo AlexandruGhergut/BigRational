@@ -1,5 +1,23 @@
 #include "BigRational.h"
 
+BigRational::BigRational()
+{
+    numerator = "0";
+    denominator = "1";
+}
+
+BigRational::BigRational(BigInteger a, BigInteger b)
+{
+    numerator = a;
+    denominator = b;
+}
+
+BigRational::BigRational(const char *a, const char *b)
+{
+    numerator = BigInteger(a);
+    denominator = BigInteger(b);
+}
+
 BigRational BigRational::operator*(BigRational const &rhs)
 {
     BigRational result;
@@ -32,4 +50,12 @@ istream & operator>>(istream &in, BigRational &x)
 BigInteger BigRational::getGCD()
 {
     return BigInteger::getGCD(numerator, denominator);
+}
+
+void BigRational::reduce()
+{
+    BigInteger GCD = getGCD();
+
+    numerator = numerator / GCD;
+    denominator = denominator / GCD;
 }

@@ -5,8 +5,9 @@ using namespace std;
 
 int main()
 {
-    BigInteger h = "3";
-    BigInteger c = h + "3";
-    cout << c;
+    BigRational h;
+    cin >> h;
+    h.reduce();
+    cout << h;
     return 0;
 }

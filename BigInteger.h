@@ -31,18 +31,22 @@ public:
     BigInteger operator+(const char *c);
     BigInteger operator-(BigInteger const &rhs);
     BigInteger operator-(const char *c);
-    BigInteger operator*(BigInteger const &rhs) const;
+    BigInteger operator*(BigInteger const &rhs) const; // TODO const?
     BigInteger operator*(const char *c) const;
     BigInteger operator=(BigInteger const &rhs);
+    const char * operator=(const char *x);
     BigInteger operator+=(BigInteger const &rhs);
     BigInteger operator+=(const char *c);
     BigInteger operator-=(BigInteger const &rhs);
     BigInteger operator-=(const char *c);
     BigInteger operator*=(BigInteger const &rhs);
     BigInteger operator*=(const char *c);
-    BigInteger operator/(BigInteger const &rhs); // TODO const?
+    BigInteger operator++();
+    BigInteger operator++(int x);
+    BigInteger operator--();
+    BigInteger operator--(int x);
+    BigInteger operator/(BigInteger const &rhs);
     BigInteger operator/(const char *c);
-    const char * operator=(const char *x);
     friend ostream & operator<< (ostream &out, const BigInteger &x);
     friend istream & operator>> (istream &in, BigInteger &x);
     static BigInteger getGCD(BigInteger lhs, BigInteger rhs);

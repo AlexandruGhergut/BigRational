@@ -329,6 +329,33 @@ BigInteger BigInteger::operator=(BigInteger const &rhs)
     return *this;
 }
 
+const char * BigInteger::operator=(const char *x)
+{
+    delete l;
+    l = new LinkedList;
+    bool leadingZero = true, insertion = false;
+    for (int i = 0; i < strlen(x); i++)
+    {
+        if (x[i] >= '0' && x[i] <= '9')
+        {
+            if (leadingZero && x[i] != '0')
+                leadingZero = false;
+            if (!leadingZero)
+            {
+                l->insertToLeft(new Node(x[i] - '0'));
+                insertion = true;
+            }
+        }
+    }
+
+    if (x[0] == '-')
+        negative = true;
+
+    if (!insertion)
+        l->insertToLeft(new Node(0)), negative = false;
+    return x;
+}
+
 BigInteger BigInteger::operator+=(BigInteger const &rhs)
 {
     *this = *this + rhs;
@@ -365,6 +392,32 @@ BigInteger BigInteger::operator*=(const char *c)
     return *this;
 }
 
+BigInteger BigInteger::operator++()
+{
+    *this = *this + "1";
+    return *this;
+}
+
+BigInteger BigInteger::operator++(int x)
+{
+    BigInteger result = *this;
+    *this = *this + "1";
+    return result;
+}
+
+BigInteger BigInteger::operator--()
+{
+    *this = *this - "1";
+    return *this;
+}
+
+BigInteger BigInteger::operator--(int x)
+{
+    BigInteger result = *this;
+    *this = *this - "1";
+    return result;
+}
+
 BigInteger BigInteger::operator/(BigInteger const &rhs)
 {
     // TODO
@@ -385,33 +438,6 @@ BigInteger BigInteger::operator/(const char *c)
     return *this / BigInteger(c);
 }
 
-const char * BigInteger::operator=(const char *x)
-{
-    delete l;
-    l = new LinkedList;
-    bool leadingZero = true, insertion = false;
-    for (int i = 0; i < strlen(x); i++)
-    {
-        if (x[i] >= '0' && x[i] <= '9')
-        {
-            if (leadingZero && x[i] != '0')
-                leadingZero = false;
-            if (!leadingZero)
-            {
-                l->insertToLeft(new Node(x[i] - '0'));
-                insertion = true;
-            }
-        }
-    }
-
-    if (x[0] == '-')
-        negative = true;
-
-    if (!insertion)
-        l->insertToLeft(new Node(0)), negative = false;
-    return x;
-}
-
 ostream & operator << (ostream &out, const BigInteger &x)
 {
     Node *current = x.l->getHead();
@@ -426,7 +452,7 @@ ostream & operator << (ostream &out, const BigInteger &x)
 
 istream & operator >> (istream &in, BigInteger &x)
 {
-    char str[200000];
+    char str[999999]; // need a better way of doing this
     in >> str;
     x = str;
 
