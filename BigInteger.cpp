@@ -56,11 +56,11 @@ bool BigInteger::computeSign(bool s1, bool s2) const
     return false;
 }
 
-void BigInteger::printInteger(Node *current) const
+void BigInteger::printInteger(ostream &out, Node *current) const
 {
     if (current->getNext())
-        printInteger(current->getNext());
-    cout << current->getValue();
+        printInteger(out, current->getNext());
+    out << current->getValue();
 }
 
 int BigInteger::cmp(int lhs, int rhs)
@@ -108,7 +108,7 @@ int BigInteger::cmp(BigInteger const &lhs, BigInteger const &rhs)
 
 // true - addition, false - substraction
 
-BigInteger BigInteger::processOp(BigInteger const &lhs, BigInteger const &rhs, bool inputOp) const
+BigInteger BigInteger::processOp(BigInteger const &lhs, BigInteger const &rhs, bool inputOp)
 {
     bool outputOp = (lhs.negative == rhs.negative);
     if (inputOp == false)
@@ -120,7 +120,7 @@ BigInteger BigInteger::processOp(BigInteger const &lhs, BigInteger const &rhs, b
         return substract(lhs, rhs);
 }
 
-BigInteger BigInteger::add(BigInteger const &lhs, BigInteger const &rhs) const
+BigInteger BigInteger::add(BigInteger const &lhs, BigInteger const &rhs)
 {
     BigInteger result;
 
@@ -160,7 +160,7 @@ BigInteger BigInteger::add(BigInteger const &lhs, BigInteger const &rhs) const
     return result;
 }
 
-BigInteger BigInteger::substract(BigInteger const &lhs, BigInteger const &rhs) const
+BigInteger BigInteger::substract(BigInteger const &lhs, BigInteger const &rhs)
 {
     BigInteger result;
 
@@ -249,7 +249,7 @@ BigInteger BigInteger::getGCD(BigInteger lhs, BigInteger rhs)
     return lhs;
 }
 
-BigInteger BigInteger::operator+(BigInteger const &rhs) const
+BigInteger BigInteger::operator+(BigInteger const &rhs)
 {
     return processOp(*this, rhs, true);
 }
@@ -314,15 +314,18 @@ BigInteger BigInteger::operator=(BigInteger const &rhs)
     return *this;
 }
 
-BigInteger BigInteger::operator/(BigInteger const &rhs) const
+BigInteger BigInteger::operator/(BigInteger const &rhs)
 {
     // TODO
-    BigInteger result = *this;
-    BigInteger i;
-    BigInteger one;
-    one = "1";
-    for (i = "1"; cmp(i, rhs) <= 0; i = i + one)
-        result = result - rhs;
+    BigInteger result = "0";
+    BigInteger zero = "0";
+    BigInteger lhs = *this;
+    while (cmp(lhs, zero) < 0)
+    {
+        lhs = lhs - rhs;
+        result = result + BigInteger("1");
+    }
+
     return result;
 }
 
@@ -359,8 +362,17 @@ ostream & operator << (ostream &out, const BigInteger &x)
     if (current)
     {
         if (x.negative)
-            cout << '-';
-        x.printInteger(current);
+            out << '-';
+        x.printInteger(out, current);
     }
     return out;
+}
+
+istream & operator >> (istream &in, BigInteger &x)
+{
+    char str[200000];
+    in >> str;
+    x = str;
+
+    return in;
 }

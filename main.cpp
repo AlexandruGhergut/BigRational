@@ -5,9 +5,9 @@ using namespace std;
 
 int main()
 {
-    BigInteger h = "-32";
-    BigInteger k = "-4";
-    cout << h * k;
-    //cout << h;
+    BigInteger h;
+    BigInteger k;
+    cin >> h >> k;
+    cout << h / k;
     return 0;
 }
