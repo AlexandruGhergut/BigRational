@@ -23,7 +23,7 @@ class BigInteger
 
 public:
     BigInteger();
-    BigInteger(char *x);
+    BigInteger(const char *x);
     BigInteger(BigInteger const &rhs);
     ~BigInteger();
 
@@ -32,7 +32,7 @@ public:
     BigInteger operator*(BigInteger const &rhs) const;
     BigInteger operator=(BigInteger const &rhs);
     BigInteger operator/(BigInteger const &rhs) const; // TODO const?
-    char * operator=(char *x);
+    const char * operator=(const char *x);
     friend ostream & operator << (ostream &out, const BigInteger &x);
     static BigInteger getGCD(BigInteger lhs, BigInteger rhs);
 };

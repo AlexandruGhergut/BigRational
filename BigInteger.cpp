@@ -6,7 +6,7 @@ BigInteger::BigInteger()
     negative = false;
 }
 
-BigInteger::BigInteger(char *x)
+BigInteger::BigInteger(const char *x)
 {
     bool insertion = false;
     negative = false;
@@ -326,7 +326,7 @@ BigInteger BigInteger::operator/(BigInteger const &rhs) const
     return result;
 }
 
-char * BigInteger::operator=(char *x)
+const char * BigInteger::operator=(const char *x)
 {
     delete l;
     l = new LinkedList;
