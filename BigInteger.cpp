@@ -254,9 +254,19 @@ BigInteger BigInteger::operator+(BigInteger const &rhs)
     return processOp(*this, rhs, true);
 }
 
+BigInteger BigInteger::operator+(const char *c)
+{
+    return processOp(*this, BigInteger(c), true);
+}
+
 BigInteger BigInteger::operator-(BigInteger const &rhs)
 {
     return processOp(*this, rhs, false);
+}
+
+BigInteger BigInteger::operator-(const char *c)
+{
+    return processOp(*this, BigInteger(c), false);
 }
 
 BigInteger BigInteger::operator*(BigInteger const &rhs) const
@@ -301,6 +311,11 @@ BigInteger BigInteger::operator*(BigInteger const &rhs) const
     return result;
 }
 
+BigInteger BigInteger::operator*(const char *c) const
+{
+    return *this * BigInteger(c);
+}
+
 BigInteger BigInteger::operator=(BigInteger const &rhs)
 {
     l = new LinkedList;
@@ -314,19 +329,60 @@ BigInteger BigInteger::operator=(BigInteger const &rhs)
     return *this;
 }
 
+BigInteger BigInteger::operator+=(BigInteger const &rhs)
+{
+    *this = *this + rhs;
+    return *this;
+}
+
+BigInteger BigInteger::operator+=(const char *c)
+{
+    *this = *this + BigInteger(c);
+    return *this;
+}
+
+BigInteger BigInteger::operator-=(BigInteger const &rhs)
+{
+    *this = *this - rhs;
+    return *this;
+}
+
+BigInteger BigInteger::operator-=(const char *c)
+{
+    *this = *this - BigInteger(c);
+    return *this;
+}
+
+BigInteger BigInteger::operator*=(BigInteger const &rhs)
+{
+    *this = *this * rhs;
+    return *this;
+}
+
+BigInteger BigInteger::operator*=(const char *c)
+{
+    *this = *this * BigInteger(c);
+    return *this;
+}
+
 BigInteger BigInteger::operator/(BigInteger const &rhs)
 {
     // TODO
+
     BigInteger result = "0";
-    BigInteger zero = "0";
     BigInteger lhs = *this;
-    while (cmp(lhs, zero) < 0)
+    while (cmp(lhs, rhs) <= 0)
     {
         lhs = lhs - rhs;
         result = result + BigInteger("1");
     }
 
     return result;
+}
+
+BigInteger BigInteger::operator/(const char *c)
+{
+    return *this / BigInteger(c);
 }
 
 const char * BigInteger::operator=(const char *x)

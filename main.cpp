@@ -1,13 +1,12 @@
 #include <iostream>
-#include "BigInteger.h"
+#include "BigRational.h"
 
 using namespace std;
 
 int main()
 {
-    BigInteger h;
-    BigInteger k;
-    cin >> h >> k;
-    cout << h / k;
+    BigInteger h = "3";
+    BigInteger c = h + "3";
+    cout << c;
     return 0;
 }
