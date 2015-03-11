@@ -1,0 +1,55 @@
+# depslib dependency file v1.0
+1425740390 source:/home/alexandru/Programming/University/POO/Project2/LinkedList.cpp
+	"LinkedList.h"
+
+1425738856 /home/alexandru/Programming/University/POO/Project2/LinkedList.h
+	"Node.h"
+
+1425548592 /home/alexandru/Programming/University/POO/Project2/Node.h
+	<cstddef>
+
+1426069525 source:/home/alexandru/Programming/University/POO/Project2/main.cpp
+	<iostream>
+	"BigInteger.h"
+
+1425583949 source:/home/alexandru/Programming/University/POO/Project2/Node.cpp
+	"Node.h"
+
+1426069456 source:/home/alexandru/Programming/University/POO/Project2/BigInteger.cpp
+	"BigInteger.h"
+
+1426068078 /home/alexandru/Programming/University/POO/Project2/BigInteger.h
+	"LinkedList.h"
+	<cstring>
+	<iostream>
+
+1425584678 source:/home/alexandru/Programming/University/POO/Project2 (copy)/BigInteger.cpp
+	"BigInteger.h"
+
+1425582800 /home/alexandru/Programming/University/POO/Project2 (copy)/BigInteger.h
+	"LinkedList.h"
+	<string>
+	<iostream>
+
+1425581349 /home/alexandru/Programming/University/POO/Project2 (copy)/LinkedList.h
+	"Node.h"
+
+1425548592 /home/alexandru/Programming/University/POO/Project2 (copy)/Node.h
+	<cstddef>
+
+1425583686 source:/home/alexandru/Programming/University/POO/Project2 (copy)/LinkedList.cpp
+	"LinkedList.h"
+
+1425584585 source:/home/alexandru/Programming/University/POO/Project2 (copy)/main.cpp
+	<iostream>
+	"BigInteger.h"
+
+1425583949 source:/home/alexandru/Programming/University/POO/Project2 (copy)/Node.cpp
+	"Node.h"
+
+1426069431 source:/home/alexandru/Programming/University/POO/Project2/BigRational.cpp
+	"BigRational.h"
+
+1425809128 /home/alexandru/Programming/University/POO/Project2/BigRational.h
+	"BigInteger.h"
+
