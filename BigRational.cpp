@@ -40,11 +40,13 @@ BigRational BigRational::operator+(BigRational const &rhs)
 ostream & operator<<(ostream &out,const BigRational &x)
 {
     out << x.numerator << "/" << x.denominator;
+    return out;
 }
 
 istream & operator>>(istream &in, BigRational &x)
 {
     in >> x.numerator >> x.denominator;
+    return in;
 }
 
 BigInteger BigRational::getGCD()
