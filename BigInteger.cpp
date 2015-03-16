@@ -174,10 +174,7 @@ BigInteger BigInteger::substract(const BigInteger &lhs, const BigInteger &rhs)
         Node *aux = list2;
         list2 = list1;
         list1 = aux;
-        if (rhs.negative)
-            result.negative = false;
-        else
-            result.negative = true;
+        result.negative = rhs.negative;
     }
     else if (cmpResult == 0)
     {
@@ -318,6 +315,7 @@ BigInteger BigInteger::operator*(const char *c) const
 
 BigInteger BigInteger::operator=(const BigInteger &rhs)
 {
+    delete l;
     l = new LinkedList;
     Node *current = rhs.l->getHead();
     while(current)
@@ -333,6 +331,7 @@ const char * BigInteger::operator=(const char *x)
 {
     delete l;
     l = new LinkedList;
+    negative = false;
     bool leadingZero = true, insertion = false;
     for (int i = 0; i < strlen(x); i++)
     {
@@ -435,6 +434,23 @@ BigInteger BigInteger::operator/(const BigInteger &rhs)
 BigInteger BigInteger::operator/(const char *c)
 {
     return *this / BigInteger(c);
+}
+
+BigInteger BigInteger::operator%(const BigInteger &rhs)
+{
+    return *this - (*this / rhs) * rhs;
+}
+
+BigInteger BigInteger::operator%(const char *c)
+{
+    BigInteger rhs(c);
+    return *this - (*this / rhs) * rhs;
+}
+
+BigInteger BigInteger::properDivision(const BigInteger &lhs, const BigInteger &rhs)
+{
+    BigInteger result = "0";
+
 }
 
 BigInteger BigInteger::operator/=(const BigInteger &rhs)

@@ -47,6 +47,9 @@ public:
     BigInteger operator--(int x);
     BigInteger operator/(const BigInteger &rhs);
     BigInteger operator/(const char *c);
+    BigInteger operator%(const BigInteger &rhs);
+    BigInteger operator%(const char *c);
+    BigInteger properDivision(const BigInteger &lhs, const BigInteger &rhs); // prototype
     BigInteger operator/=(const BigInteger &rhs);
     BigInteger operator/=(const char *c);
     BigInteger operator-();
