@@ -29,22 +29,26 @@ BigRational BigRational::operator*(BigRational const &rhs)
 BigRational BigRational::operator+(BigRational const &rhs)
 {
     BigRational result;
-    BigInteger GCD = BigInteger::getGCD(denominator, rhs.denominator);
-    BigInteger LCM = (denominator * rhs.denominator) / GCD;
-    BigInteger test = rhs.denominator;
+    BigInteger LCM = (denominator * rhs.denominator) / BigInteger::getGCD(denominator, rhs.denominator);
     result.denominator = LCM;
+    BigInteger a = numerator * (LCM / denominator);
+    BigInteger b = rhs.numerator * (LCM / rhs.denominator);
     result.numerator = numerator * (LCM / denominator) + rhs.numerator * (LCM / rhs.denominator);
     return result;
 }
 
 ostream & operator<<(ostream &out,const BigRational &x)
 {
-    out << x.numerator << "/" << x.denominator;
+    out << x.numerator << " / " << x.denominator;
+    return out;
 }
 
 istream & operator>>(istream &in, BigRational &x)
 {
     in >> x.numerator >> x.denominator;
+    if (x.denominator == "0")
+        x.denominator = "1";
+    return in;
 }
 
 BigInteger BigRational::getGCD()

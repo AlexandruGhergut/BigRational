@@ -32,7 +32,7 @@ BigInteger::BigInteger(const char *x)
         l->insertToLeft(new Node(0));
 }
 
-BigInteger::BigInteger(BigInteger const &rhs)
+BigInteger::BigInteger(const BigInteger &rhs)
 {
     l = new LinkedList;
     Node *current = rhs.l->getHead();
@@ -87,7 +87,7 @@ int BigInteger::cmp(Node *l1, Node *l2)
     return k;
 }
 
-int BigInteger::cmp(BigInteger const &lhs, BigInteger const &rhs)
+int BigInteger::cmp(const BigInteger &lhs, const BigInteger &rhs)
 {
     /* returns 1 if lhs < rhs
                0 if lhs == rhs
@@ -108,7 +108,7 @@ int BigInteger::cmp(BigInteger const &lhs, BigInteger const &rhs)
 
 // true - addition, false - substraction
 
-BigInteger BigInteger::processOp(BigInteger const &lhs, BigInteger const &rhs, bool inputOp)
+BigInteger BigInteger::processOp(const BigInteger &lhs, const BigInteger &rhs, bool inputOp)
 {
     bool outputOp = (lhs.negative == rhs.negative);
     if (inputOp == false)
@@ -120,7 +120,7 @@ BigInteger BigInteger::processOp(BigInteger const &lhs, BigInteger const &rhs, b
         return substract(lhs, rhs);
 }
 
-BigInteger BigInteger::add(BigInteger const &lhs, BigInteger const &rhs)
+BigInteger BigInteger::add(const BigInteger &lhs, const BigInteger &rhs)
 {
     BigInteger result;
 
@@ -160,7 +160,7 @@ BigInteger BigInteger::add(BigInteger const &lhs, BigInteger const &rhs)
     return result;
 }
 
-BigInteger BigInteger::substract(BigInteger const &lhs, BigInteger const &rhs)
+BigInteger BigInteger::substract(const BigInteger &lhs, const BigInteger &rhs)
 {
     BigInteger result;
 
@@ -174,10 +174,7 @@ BigInteger BigInteger::substract(BigInteger const &lhs, BigInteger const &rhs)
         Node *aux = list2;
         list2 = list1;
         list1 = aux;
-        if (rhs.negative)
-            result.negative = false;
-        else
-            result.negative = true;
+        result.negative = rhs.negative;
     }
     else if (cmpResult == 0)
     {
@@ -249,7 +246,7 @@ BigInteger BigInteger::getGCD(BigInteger lhs, BigInteger rhs)
     return lhs;
 }
 
-BigInteger BigInteger::operator+(BigInteger const &rhs)
+BigInteger BigInteger::operator+(const BigInteger &rhs)
 {
     return processOp(*this, rhs, true);
 }
@@ -259,7 +256,7 @@ BigInteger BigInteger::operator+(const char *c)
     return processOp(*this, BigInteger(c), true);
 }
 
-BigInteger BigInteger::operator-(BigInteger const &rhs)
+BigInteger BigInteger::operator-(const BigInteger &rhs)
 {
     return processOp(*this, rhs, false);
 }
@@ -269,7 +266,7 @@ BigInteger BigInteger::operator-(const char *c)
     return processOp(*this, BigInteger(c), false);
 }
 
-BigInteger BigInteger::operator*(BigInteger const &rhs) const
+BigInteger BigInteger::operator*(const BigInteger &rhs) const
 {
     BigInteger result;
     Node *list1, *list2;
@@ -316,8 +313,9 @@ BigInteger BigInteger::operator*(const char *c) const
     return *this * BigInteger(c);
 }
 
-BigInteger BigInteger::operator=(BigInteger const &rhs)
+BigInteger BigInteger::operator=(const BigInteger &rhs)
 {
+    delete l;
     l = new LinkedList;
     Node *current = rhs.l->getHead();
     while(current)
@@ -333,6 +331,7 @@ const char * BigInteger::operator=(const char *x)
 {
     delete l;
     l = new LinkedList;
+    negative = false;
     bool leadingZero = true, insertion = false;
     for (int i = 0; i < strlen(x); i++)
     {
@@ -356,7 +355,7 @@ const char * BigInteger::operator=(const char *x)
     return x;
 }
 
-BigInteger BigInteger::operator+=(BigInteger const &rhs)
+BigInteger BigInteger::operator+=(const BigInteger &rhs)
 {
     *this = *this + rhs;
     return *this;
@@ -368,7 +367,7 @@ BigInteger BigInteger::operator+=(const char *c)
     return *this;
 }
 
-BigInteger BigInteger::operator-=(BigInteger const &rhs)
+BigInteger BigInteger::operator-=(const BigInteger &rhs)
 {
     *this = *this - rhs;
     return *this;
@@ -380,7 +379,7 @@ BigInteger BigInteger::operator-=(const char *c)
     return *this;
 }
 
-BigInteger BigInteger::operator*=(BigInteger const &rhs)
+BigInteger BigInteger::operator*=(const BigInteger &rhs)
 {
     *this = *this * rhs;
     return *this;
@@ -418,10 +417,9 @@ BigInteger BigInteger::operator--(int x)
     return result;
 }
 
-BigInteger BigInteger::operator/(BigInteger const &rhs)
+BigInteger BigInteger::operator/(const BigInteger &rhs)
 {
-    // TODO
-
+    // TODO - faster and smarter implementation
     BigInteger result = "0";
     BigInteger lhs = *this;
     while (cmp(lhs, rhs) <= 0)
@@ -436,6 +434,78 @@ BigInteger BigInteger::operator/(BigInteger const &rhs)
 BigInteger BigInteger::operator/(const char *c)
 {
     return *this / BigInteger(c);
+}
+
+BigInteger BigInteger::operator%(const BigInteger &rhs)
+{
+    return *this - (*this / rhs) * rhs;
+}
+
+BigInteger BigInteger::operator%(const char *c)
+{
+    BigInteger rhs(c);
+    return *this - (*this / rhs) * rhs;
+}
+
+BigInteger BigInteger::properDivision(const BigInteger &lhs, const BigInteger &rhs)
+{
+    BigInteger result = "0";
+
+}
+
+BigInteger BigInteger::operator/=(const BigInteger &rhs)
+{
+    *this = *this / rhs;
+    return *this;
+}
+
+BigInteger BigInteger::operator/=(const char *c)
+{
+    *this = *this / BigInteger(c);
+    return *this;
+}
+
+bool BigInteger::operator==(const BigInteger &rhs)
+{
+    if (cmp(*this, rhs) == 0)
+        return true;
+    return false;
+}
+
+bool BigInteger::operator!=(const BigInteger &rhs)
+{
+    return !(*this == rhs);
+}
+
+bool BigInteger::operator<(const BigInteger &rhs)
+{
+    if (cmp(*this, rhs) == 1)
+        return true;
+    return false;
+}
+
+bool BigInteger::operator<=(const BigInteger &rhs)
+{
+    return (*this < rhs || *this == rhs);
+}
+
+bool BigInteger::operator>(const BigInteger &rhs)
+{
+    if (cmp(*this, rhs) == -1)
+        return true;
+    return false;
+}
+
+bool BigInteger::operator>=(const BigInteger &rhs)
+{
+    return (*this > rhs || *this == rhs);
+}
+
+BigInteger BigInteger::operator-()
+{
+    BigInteger result = *this;
+    result.negative = !result.negative;
+    return result;
 }
 
 ostream & operator << (ostream &out, const BigInteger &x)
