@@ -3,12 +3,15 @@
 
 using namespace std;
 
-void printMenu(BigRational &a, BigRational &b);
+template <class T>
+void printMenu(BigRational<T> &a, BigRational<T> &b);
+
 void clearScreen();
 
 int main()
 {
-    BigRational a, b;
+    BigRational<int> a;
+    BigRational<int> b;
 
     int choice;
     do
@@ -23,7 +26,7 @@ int main()
             cin >> a >> b;
             break;
         case 2:
-            // merge greu pentru numere mari datorita scaderilor repetate
+            // slow for big numbers because of repeated substractions
             cout << a + b;
             break;
         case 3:
@@ -40,10 +43,10 @@ int main()
         case 6:
             break;
         default:
-            cout << "Optiunea nu este prezenta in meniu.";
+            cout << "Optiunea not available in the menu.";
 
         }
-        cout << "\nApasati ENTER pentru a continua.";
+        cout << "\nPress ENTER to continue.";
         cin.ignore();
         cin.get();
     } while (choice != 6);
@@ -51,16 +54,17 @@ int main()
     return 0;
 }
 
-void printMenu(BigRational &a, BigRational &b)
+template <class T>
+void printMenu(BigRational<T> &a, BigRational<T> &b)
 {
-    cout << "Numerele actuale:\nA = " << a << "\nB = " << b << "\n";
-    cout << "1) Introduceti 2 perechi de numere mari (primul element - numaratorul, al doilea - numitorul)\n";
-    cout << "2) Afisare suma\n";
-    cout << "3) Afisare produs\n";
-    cout << "4) Afisare CMMDC\n";
-    cout << "5) Transformare in fractii ireductibile\n";
-    cout << "6) Iesire\n";
-    cout << "Introduceti optiunea: ";
+    cout << "Actual numbers:\nA = " << a << "\nB = " << b << "\n";
+    cout << "1) Enter 2 pairs of big numbers \n(for a pair: first = numerator, second = denominator)\n";
+    cout << "2) Print sum\n";
+    cout << "3) Print product\n";
+    cout << "4) Print GCD\n";
+    cout << "5) Convert to irreducible fractions\n";
+    cout << "6) Exit\n";
+    cout << "Enter your option: ";
 }
 
 void clearScreen()
@@ -68,3 +72,4 @@ void clearScreen()
     for (int i = 1; i <= 100; i++)
         cout << "\n";
 }
+
